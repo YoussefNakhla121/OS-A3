@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="https://maven.apache.org/surefire/maven-surefire-plugin/xsd/surefire-test-report.xsd" name="AGSchedulerTest" time="0.089" tests="6" errors="0" skipped="0" failures="6">
+  <properties>
+    <property name="java.specification.version" value="17"/>
+    <property name="sun.cpu.isalist" value="amd64"/>
+    <property name="sun.jnu.encoding" value="Cp1252"/>
+    <property name="java.class.path" value="D:\Java\OS-A3\target\test-classes;D:\Java\OS-A3\target\classes;C:\Users\youss\.m2\repository\org\junit\jupiter\junit-jupiter-api\5.9.0\junit-jupiter-api-5.9.0.jar;C:\Users\youss\.m2\repository\org\opentest4j\opentest4j\1.2.0\opentest4j-1.2.0.jar;C:\Users\youss\.m2\repository\org\junit\platform\junit-platform-commons\1.9.0\junit-platform-commons-1.9.0.jar;C:\Users\youss\.m2\repository\org\apiguardian\apiguardian-api\1.1.2\apiguardian-api-1.1.2.jar;C:\Users\youss\.m2\repository\org\junit\jupiter\junit-jupiter-params\5.9.0\junit-jupiter-params-5.9.0.jar;C:\Users\youss\.m2\repository\org\junit\jupiter\junit-jupiter-engine\5.9.0\junit-jupiter-engine-5.9.0.jar;C:\Users\youss\.m2\repository\org\junit\platform\junit-platform-engine\1.9.0\junit-platform-engine-1.9.0.jar;"/>
+    <property name="java.vm.vendor" value="Eclipse Adoptium"/>
+    <property name="sun.arch.data.model" value="64"/>
+    <property name="user.variant" value=""/>
+    <property name="java.vendor.url" value="https://adoptium.net/"/>
+    <property name="user.timezone" value="Africa/Cairo"/>
+    <property name="os.name" value="Windows 11"/>
+    <property name="java.vm.specification.version" value="17"/>
+    <property name="sun.java.launcher" value="SUN_STANDARD"/>
+    <property name="user.country" value="US"/>
+    <property name="sun.boot.library.path" value="C:\Program Files\Eclipse Adoptium\jdk-17.0.14.7-hotspot\bin"/>
+    <property name="sun.java.command" value="C:\Users\youss\AppData\Local\Temp\surefire10134863038030525943\surefirebooter11792207530404292242.jar C:\Users\youss\AppData\Local\Temp\surefire10134863038030525943 2025-12-21T16-02-00_086-jvmRun1 surefire674372268188207766tmp surefire_013203303790701732292tmp"/>
+    <property name="jdk.debug" value="release"/>
+    <property name="surefire.test.class.path" value="D:\Java\OS-A3\target\test-classes;D:\Java\OS-A3\target\classes;C:\Users\youss\.m2\repository\org\junit\jupiter\junit-jupiter-api\5.9.0\junit-jupiter-api-5.9.0.jar;C:\Users\youss\.m2\repository\org\opentest4j\opentest4j\1.2.0\opentest4j-1.2.0.jar;C:\Users\youss\.m2\repository\org\junit\platform\junit-platform-commons\1.9.0\junit-platform-commons-1.9.0.jar;C:\Users\youss\.m2\repository\org\apiguardian\apiguardian-api\1.1.2\apiguardian-api-1.1.2.jar;C:\Users\youss\.m2\repository\org\junit\jupiter\junit-jupiter-params\5.9.0\junit-jupiter-params-5.9.0.jar;C:\Users\youss\.m2\repository\org\junit\jupiter\junit-jupiter-engine\5.9.0\junit-jupiter-engine-5.9.0.jar;C:\Users\youss\.m2\repository\org\junit\platform\junit-platform-engine\1.9.0\junit-platform-engine-1.9.0.jar;"/>
+    <property name="sun.cpu.endian" value="little"/>
+    <property name="user.home" value="C:\Users\youss"/>
+    <property name="user.language" value="en"/>
+    <property name="java.specification.vendor" value="Oracle Corporation"/>
+    <property name="java.version.date" value="2025-01-21"/>
+    <property name="java.home" value="C:\Program Files\Eclipse Adoptium\jdk-17.0.14.7-hotspot"/>
+    <property name="file.separator" value="\"/>
+    <property name="basedir" value="D:\Java\OS-A3"/>
+    <property name="java.vm.compressedOopsMode" value="Zero based"/>
+    <property name="line.separator" value="&#10;"/>
+    <property name="java.vm.specification.vendor" value="Oracle Corporation"/>
+    <property name="java.specification.name" value="Java Platform API Specification"/>
+    <property name="surefire.real.class.path" value="C:\Users\youss\AppData\Local\Temp\surefire10134863038030525943\surefirebooter11792207530404292242.jar"/>
+    <property name="user.script" value=""/>
+    <property name="sun.management.compiler" value="HotSpot 64-Bit Tiered Compilers"/>
+    <property name="java.runtime.version" value="17.0.14+7"/>
+    <property name="user.name" value="youss"/>
+    <property name="path.separator" value=";"/>
+    <property name="os.version" value="10.0"/>
+    <property name="java.runtime.name" value="OpenJDK Runtime Environment"/>
+    <property name="file.encoding" value="Cp1252"/>
+    <property name="java.vm.name" value="OpenJDK 64-Bit Server VM"/>
+    <property name="java.vendor.version" value="Temurin-17.0.14+7"/>
+    <property name="localRepository" value="C:\Users\youss\.m2\repository"/>
+    <property name="java.vendor.url.bug" value="https://github.com/adoptium/adoptium-support/issues"/>
+    <property name="java.io.tmpdir" value="C:\Users\youss\AppData\Local\Temp\"/>
+    <property name="java.version" value="17.0.14"/>
+    <property name="user.dir" value="D:\Java\OS-A3"/>
+    <property name="os.arch" value="amd64"/>
+    <property name="java.vm.specification.name" value="Java Virtual Machine Specification"/>
+    <property name="sun.os.patch.level" value=""/>
+    <property name="native.encoding" value="Cp1252"/>
+    <property name="java.library.path" value="C:\Program Files\Eclipse Adoptium\jdk-17.0.14.7-hotspot\bin;C:\WINDOWS\Sun\Java\bin;C:\WINDOWS\system32;C:\WINDOWS;c:\Users\youss\AppData\Roaming\Code\User\globalStorage\github.copilot-chat\debugCommand;c:\Users\youss\AppData\Roaming\Code\User\globalStorage\github.copilot-chat\copilotCli;C:\Program Files\Eclipse Adoptium\jdk-17.0.14.7-hotspot\bin;C:\Windows\system32;C:\Windows;C:\Windows\System32\Wbem;C:\Windows\System32\WindowsPowerShell\v1.0\;C:\Windows\System32\OpenSSH\;C:\Program Files\dotnet\;C:\Program Files (x86)\NVIDIA Corporation\PhysX\Common;C:\Program Files\NVIDIA Corporation\NVIDIA NvDLISR;C:\Program Files\Microsoft SQL Server\Client SDK\ODBC\130\Tools\Binn\;C:\Program Files (x86)\Microsoft SQL Server\140\Tools\Binn\;C:\Program Files\Microsoft SQL Server\140\Tools\Binn\;C:\Program Files\Microsoft SQL Server\140\DTS\Binn\;C:\Program Files\Git\cmd;C:\Program Files (x86)\Microsoft SQL Server\160\Tools\Binn\;C:\Program Files\Microsoft SQL Server\160\Tools\Binn\;C:\Program Files\Microsoft SQL Server\Client SDK\ODBC\170\Tools\Binn\;C:\Program Files\Microsoft SQL Server\160\DTS\Binn\;C:\Program Files (x86)\Microsoft SQL Server\160\DTS\Binn\;C:\WINDOWS\system32;C:\WINDOWS;C:\WINDOWS\System32\Wbem;C:\WINDOWS\System32\WindowsPowerShell\v1.0\;C:\WINDOWS\System32\OpenSSH\;C:\Users\youss\AppData\Local\Muse Hub\lib;C:\Program Files\Microsoft VS Code\bin;C:\maven\apache-maven-3.9.12\bin;C:\Users\youss\AppData\Local\Microsoft\WindowsApps;C:\Users\youss\AppData\Local\Programs\Microsoft VS Code\bin;C:\msys64\ucrt64\bin;C:\dev\flutter\bin;C:\dev\flutter\bin\cache\dart-sdk\bin;D:\cursor\resources\app\bin;C:\Users\youss\AppData\Local\PowerToys\;c:\Users\youss\.vscode\extensions\vscjava.vscode-java-debug-0.58.4\bundled\scripts\noConfigScripts;."/>
+    <property name="java.vm.info" value="mixed mode, sharing"/>
+    <property name="java.vendor" value="Eclipse Adoptium"/>
+    <property name="java.vm.version" value="17.0.14+7"/>
+    <property name="java.specification.maintenance.version" value="1"/>
+    <property name="sun.io.unicode.encoding" value="UnicodeLittle"/>
+    <property name="java.class.version" value="61.0"/>
+  </properties>
+  <testcase name="testAGScheduler{AGTestCase}[1]" classname="AGSchedulerTest" time="0.037">
+    <failure message="Waiting time mismatch for P1 in Test Case 1: Basic adaptive scheduling. Expected: 19, Got: 25 ==&gt; expected: &lt;19&gt; but was: &lt;25&gt;" type="org.opentest4j.AssertionFailedError"><![CDATA[org.opentest4j.AssertionFailedError: Waiting time mismatch for P1 in Test Case 1: Basic adaptive scheduling. Expected: 19, Got: 25 ==> expected: <19> but was: <25>
+	at AGSchedulerTest.testAGScheduler(AGSchedulerTest.java:325)
+]]></failure>
+  </testcase>
+  <testcase name="testAGScheduler{AGTestCase}[2]" classname="AGSchedulerTest" time="0.003">
+    <failure message="Execution order mismatch for Test Case 2: All arrive simultaneously. Expected: [P1, P2, P3, P2, P4, P3, P4, P3, P5, P1, P4, P1, P5, P4, P5], Got: [P1, P2, P3, P4, P3, P5, P1, P4, P5, P4, P5] ==&gt; expected: &lt;[P1, P2, P3, P2, P4, P3, P4, P3, P5, P1, P4, P1, P5, P4, P5]&gt; but was: &lt;[P1, P2, P3, P4, P3, P5, P1, P4, P5, P4, P5]&gt;" type="org.opentest4j.AssertionFailedError"><![CDATA[org.opentest4j.AssertionFailedError: Execution order mismatch for Test Case 2: All arrive simultaneously. Expected: [P1, P2, P3, P2, P4, P3, P4, P3, P5, P1, P4, P1, P5, P4, P5], Got: [P1, P2, P3, P4, P3, P5, P1, P4, P5, P4, P5] ==> expected: <[P1, P2, P3, P2, P4, P3, P4, P3, P5, P1, P4, P1, P5, P4, P5]> but was: <[P1, P2, P3, P4, P3, P5, P1, P4, P5, P4, P5]>
+	at AGSchedulerTest.testAGScheduler(AGSchedulerTest.java:312)
+]]></failure>
+  </testcase>
+  <testcase name="testAGScheduler{AGTestCase}[3]" classname="AGSchedulerTest" time="0.002">
+    <failure message="Execution order mismatch for Test Case 3: Mixed scenario. Expected: [P1, P2, P1, P4, P3, P1, P6, P5, P6, P1, P5], Got: [P1, P2, P1, P4, P3, P1, P6, P5, P1, P5] ==&gt; expected: &lt;[P1, P2, P1, P4, P3, P1, P6, P5, P6, P1, P5]&gt; but was: &lt;[P1, P2, P1, P4, P3, P1, P6, P5, P1, P5]&gt;" type="org.opentest4j.AssertionFailedError"><![CDATA[org.opentest4j.AssertionFailedError: Execution order mismatch for Test Case 3: Mixed scenario. Expected: [P1, P2, P1, P4, P3, P1, P6, P5, P6, P1, P5], Got: [P1, P2, P1, P4, P3, P1, P6, P5, P1, P5] ==> expected: <[P1, P2, P1, P4, P3, P1, P6, P5, P6, P1, P5]> but was: <[P1, P2, P1, P4, P3, P1, P6, P5, P1, P5]>
+	at AGSchedulerTest.testAGScheduler(AGSchedulerTest.java:312)
+]]></failure>
+  </testcase>
+  <testcase name="testAGScheduler{AGTestCase}[4]" classname="AGSchedulerTest" time="0.001">
+    <failure message="Waiting time mismatch for P2 in Test Case 4: Large bursts with gaps. Expected: 3, Got: 4 ==&gt; expected: &lt;3&gt; but was: &lt;4&gt;" type="org.opentest4j.AssertionFailedError"><![CDATA[org.opentest4j.AssertionFailedError: Waiting time mismatch for P2 in Test Case 4: Large bursts with gaps. Expected: 3, Got: 4 ==> expected: <3> but was: <4>
+	at AGSchedulerTest.testAGScheduler(AGSchedulerTest.java:325)
+]]></failure>
+  </testcase>
+  <testcase name="testAGScheduler{AGTestCase}[5]" classname="AGSchedulerTest" time="0.003">
+    <failure message="Execution order mismatch for Test Case 5: Large dataset comprehensive. Expected: [P1, P2, P1, P4, P3, P4, P2, P4, P5, P2, P1, P2, P6, P1, P3, P1, P5, P3, P6, P3, P5, P6, P5, P6], Got: [P1, P2, P4, P1, P2, P3, P1, P6, P1, P5, P3, P6, P3, P6, P3, P5, P6, P5, P6] ==&gt; expected: &lt;[P1, P2, P1, P4, P3, P4, P2, P4, P5, P2, P1, P2, P6, P1, P3, P1, P5, P3, P6, P3, P5, P6, P5, P6]&gt; but was: &lt;[P1, P2, P4, P1, P2, P3, P1, P6, P1, P5, P3, P6, P3, P6, P3, P5, P6, P5, P6]&gt;" type="org.opentest4j.AssertionFailedError"><![CDATA[org.opentest4j.AssertionFailedError: Execution order mismatch for Test Case 5: Large dataset comprehensive. Expected: [P1, P2, P1, P4, P3, P4, P2, P4, P5, P2, P1, P2, P6, P1, P3, P1, P5, P3, P6, P3, P5, P6, P5, P6], Got: [P1, P2, P4, P1, P2, P3, P1, P6, P1, P5, P3, P6, P3, P6, P3, P5, P6, P5, P6] ==> expected: <[P1, P2, P1, P4, P3, P4, P2, P4, P5, P2, P1, P2, P6, P1, P3, P1, P5, P3, P6, P3, P5, P6, P5, P6]> but was: <[P1, P2, P4, P1, P2, P3, P1, P6, P1, P5, P3, P6, P3, P6, P3, P5, P6, P5, P6]>
+	at AGSchedulerTest.testAGScheduler(AGSchedulerTest.java:312)
+]]></failure>
+  </testcase>
+  <testcase name="testAGScheduler{AGTestCase}[6]" classname="AGSchedulerTest" time="0.003">
+    <failure message="Execution order mismatch for Test Case 6: Complex scenario 7 processes. Expected: [P1, P2, P1, P4, P3, P2, P1, P5, P6, P5, P6, P3, P5, P7, P1, P3, P7, P3, P7], Got: [P1, P2, P1, P4, P3, P2, P5, P6, P5, P6, P1, P5, P7, P1, P3, P7, P3, P7, P3] ==&gt; expected: &lt;[P1, P2, P1, P4, P3, P2, P1, P5, P6, P5, P6, P3, P5, P7, P1, P3, P7, P3, P7]&gt; but was: &lt;[P1, P2, P1, P4, P3, P2, P5, P6, P5, P6, P1, P5, P7, P1, P3, P7, P3, P7, P3]&gt;" type="org.opentest4j.AssertionFailedError"><![CDATA[org.opentest4j.AssertionFailedError: Execution order mismatch for Test Case 6: Complex scenario 7 processes. Expected: [P1, P2, P1, P4, P3, P2, P1, P5, P6, P5, P6, P3, P5, P7, P1, P3, P7, P3, P7], Got: [P1, P2, P1, P4, P3, P2, P5, P6, P5, P6, P1, P5, P7, P1, P3, P7, P3, P7, P3] ==> expected: <[P1, P2, P1, P4, P3, P2, P1, P5, P6, P5, P6, P3, P5, P7, P1, P3, P7, P3, P7]> but was: <[P1, P2, P1, P4, P3, P2, P5, P6, P5, P6, P1, P5, P7, P1, P3, P7, P3, P7, P3]>
+	at AGSchedulerTest.testAGScheduler(AGSchedulerTest.java:312)
+]]></failure>
+  </testcase>
+</testsuite>

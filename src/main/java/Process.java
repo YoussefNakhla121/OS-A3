@@ -1,3 +1,6 @@
+import java.util.ArrayList;
+import java.util.List;
+
 /**
  * Process class for CPU scheduling simulator
  * 
@@ -22,6 +25,8 @@ public class Process {
     private int completionTime;   // Time when process completes execution
     private int waitingTime;      // Total time spent waiting in queue
     private int turnaroundTime;   // Total time from arrival to completion
+    private List<Integer> quantumHistory = new ArrayList<>();
+
     
     /**
      * Constructor to initialize a Process with basic scheduling information
@@ -90,6 +95,12 @@ public class Process {
     public int getTurnaroundTime() {
         return turnaroundTime;
     }
+
+    
+    public List<Integer> getQuantumHistory() {
+        return quantumHistory;
+    }
+    
     
     // ============== Setters ==============
     
@@ -127,6 +138,9 @@ public class Process {
     
     public void setTurnaroundTime(int turnaroundTime) {
         this.turnaroundTime = turnaroundTime;
+    }
+    public void addQuantumToHistory(int q) {
+    quantumHistory.add(q);
     }
     
     /**

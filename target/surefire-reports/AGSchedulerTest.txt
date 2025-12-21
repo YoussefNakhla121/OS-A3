@@ -1,0 +1,28 @@
+-------------------------------------------------------------------------------
+Test set: AGSchedulerTest
+-------------------------------------------------------------------------------
+Tests run: 6, Failures: 6, Errors: 0, Skipped: 0, Time elapsed: 0.089 s <<< FAILURE! - in AGSchedulerTest
+testAGScheduler{AGTestCase}[1]  Time elapsed: 0.037 s  <<< FAILURE!
+org.opentest4j.AssertionFailedError: Waiting time mismatch for P1 in Test Case 1: Basic adaptive scheduling. Expected: 19, Got: 25 ==> expected: <19> but was: <25>
+	at AGSchedulerTest.testAGScheduler(AGSchedulerTest.java:325)
+
+testAGScheduler{AGTestCase}[2]  Time elapsed: 0.003 s  <<< FAILURE!
+org.opentest4j.AssertionFailedError: Execution order mismatch for Test Case 2: All arrive simultaneously. Expected: [P1, P2, P3, P2, P4, P3, P4, P3, P5, P1, P4, P1, P5, P4, P5], Got: [P1, P2, P3, P4, P3, P5, P1, P4, P5, P4, P5] ==> expected: <[P1, P2, P3, P2, P4, P3, P4, P3, P5, P1, P4, P1, P5, P4, P5]> but was: <[P1, P2, P3, P4, P3, P5, P1, P4, P5, P4, P5]>
+	at AGSchedulerTest.testAGScheduler(AGSchedulerTest.java:312)
+
+testAGScheduler{AGTestCase}[3]  Time elapsed: 0.002 s  <<< FAILURE!
+org.opentest4j.AssertionFailedError: Execution order mismatch for Test Case 3: Mixed scenario. Expected: [P1, P2, P1, P4, P3, P1, P6, P5, P6, P1, P5], Got: [P1, P2, P1, P4, P3, P1, P6, P5, P1, P5] ==> expected: <[P1, P2, P1, P4, P3, P1, P6, P5, P6, P1, P5]> but was: <[P1, P2, P1, P4, P3, P1, P6, P5, P1, P5]>
+	at AGSchedulerTest.testAGScheduler(AGSchedulerTest.java:312)
+
+testAGScheduler{AGTestCase}[4]  Time elapsed: 0.001 s  <<< FAILURE!
+org.opentest4j.AssertionFailedError: Waiting time mismatch for P2 in Test Case 4: Large bursts with gaps. Expected: 3, Got: 4 ==> expected: <3> but was: <4>
+	at AGSchedulerTest.testAGScheduler(AGSchedulerTest.java:325)
+
+testAGScheduler{AGTestCase}[5]  Time elapsed: 0.003 s  <<< FAILURE!
+org.opentest4j.AssertionFailedError: Execution order mismatch for Test Case 5: Large dataset comprehensive. Expected: [P1, P2, P1, P4, P3, P4, P2, P4, P5, P2, P1, P2, P6, P1, P3, P1, P5, P3, P6, P3, P5, P6, P5, P6], Got: [P1, P2, P4, P1, P2, P3, P1, P6, P1, P5, P3, P6, P3, P6, P3, P5, P6, P5, P6] ==> expected: <[P1, P2, P1, P4, P3, P4, P2, P4, P5, P2, P1, P2, P6, P1, P3, P1, P5, P3, P6, P3, P5, P6, P5, P6]> but was: <[P1, P2, P4, P1, P2, P3, P1, P6, P1, P5, P3, P6, P3, P6, P3, P5, P6, P5, P6]>
+	at AGSchedulerTest.testAGScheduler(AGSchedulerTest.java:312)
+
+testAGScheduler{AGTestCase}[6]  Time elapsed: 0.003 s  <<< FAILURE!
+org.opentest4j.AssertionFailedError: Execution order mismatch for Test Case 6: Complex scenario 7 processes. Expected: [P1, P2, P1, P4, P3, P2, P1, P5, P6, P5, P6, P3, P5, P7, P1, P3, P7, P3, P7], Got: [P1, P2, P1, P4, P3, P2, P5, P6, P5, P6, P1, P5, P7, P1, P3, P7, P3, P7, P3] ==> expected: <[P1, P2, P1, P4, P3, P2, P1, P5, P6, P5, P6, P3, P5, P7, P1, P3, P7, P3, P7]> but was: <[P1, P2, P1, P4, P3, P2, P5, P6, P5, P6, P1, P5, P7, P1, P3, P7, P3, P7, P3]>
+	at AGSchedulerTest.testAGScheduler(AGSchedulerTest.java:312)
+

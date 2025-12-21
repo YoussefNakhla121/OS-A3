@@ -1,3 +1,5 @@
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Collection;
 import java.util.Iterator;
 import java.util.LinkedList;
@@ -110,4 +112,8 @@ public class ReadyQueue {
     public synchronized void clear() {
         queue.clear();
     }
+
+    public List<Process> asList() {
+    return new ArrayList<>(queue);
+}
 }
