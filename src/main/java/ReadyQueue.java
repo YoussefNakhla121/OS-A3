@@ -79,6 +79,45 @@ public class ReadyQueue {
     }
 
     /**
+     * Finds and removes the process that arrived earliest. 
+     * If multiple processes arrived at the same time, it picks the one 
+     * with the highest priority (lowest priority value).
+     *
+     * @return The selected Process, or null if the queue is empty.
+     */
+    public synchronized Process pollEarliestArrivalHighestPriority() {
+        if (queue.isEmpty()) return null;
+
+        Process bestMatch = null;
+
+        // Iterate through the current queue to find the best candidate
+        for (Process p : queue) {
+            if (bestMatch == null) {
+                bestMatch = p;
+                continue;
+            }
+
+            // Rule 1: Check Arrival Time (Earliest wins)
+            if (p.getArrivalTime() < bestMatch.getArrivalTime()) {
+                bestMatch = p;
+            } 
+            // Rule 2: If Arrival Times are equal, check Priority (Lower value wins)
+            else if (p.getArrivalTime() == bestMatch.getArrivalTime()) {
+                if (p.getPriority() < bestMatch.getPriority()) {
+                    bestMatch = p;
+                }
+            }
+        }
+
+        // Remove the found process from the internal queue and return it
+        if (bestMatch != null) {
+            queue.remove(bestMatch);
+        }
+        
+        return bestMatch;
+    }
+
+    /**
      * Remove and return the next process from the ready queue, or null if empty.
      */
     public synchronized Process poll() {

@@ -1,4 +1,6 @@
+ProcessInput.class
 ReadyQueue.class
+main.class
 ExecutionLog.class
 Scheduler.class
 SimulationEngine.class

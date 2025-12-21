@@ -288,7 +288,7 @@ public class AGSchedulerTest {
             ));
         }
 
-        SimulationEngine engine = new SimulationEngine(processes, 1); // context switch = 1
+        SimulationEngine engine = new SimulationEngine(processes, 0); // context switch = 1
         ExecutionLog executionLog = new ExecutionLog();
 
         Scheduler scheduler = new AGScheduler(

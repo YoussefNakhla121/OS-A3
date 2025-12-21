@@ -31,6 +31,7 @@ public class AGScheduler implements Scheduler {
 
         ReadyQueue readyQueue = new ReadyQueue();
         List<Process> notArrived = new ArrayList<>(processes);
+
         Process activeProcess = null;
 
         while (!readyQueue.isEmpty() || !notArrived.isEmpty() || activeProcess != null) {
@@ -134,66 +135,55 @@ public class AGScheduler implements Scheduler {
             readyQueue.addArrivedFrom(notArrived, clock.getCurrentTime(), true);
 
             /* ================= PHASE 3: PREEMPTIVE SJF (50%) ================= */
-            // Execute remaining quantum time, but check for preemption continuously
             boolean wasPreempted = false;
             
-                // Check for shorter job in ready queue
-                Process shorter = getShorterProcess(activeProcess, readyQueue);
+            // Check for shorter job in ready queue
+            Process shorter = getShorterProcess(activeProcess, readyQueue);
+            if (shorter != null && shorter.getRemainingTime() < activeProcess.getRemainingTime()) {
+                // PREEMPTION RULE: quantum += remaining
+                activeProcess.setQuantum(activeProcess.getQuantum() + remainingQuantum);
+                activeProcess.addQuantumToHistory(activeProcess.getQuantum());
                 
-                if (shorter != null && shorter.getRemainingTime() < activeProcess.getRemainingTime()) {
-                    // Preempted during SJF phase
-                    activeProcess.setQuantum(activeProcess.getQuantum() + remainingQuantum);
-                    activeProcess.addQuantumToHistory(activeProcess.getQuantum());
-                    executionLog.addRecord(activeProcess.getName(), startTime, clock.getCurrentTime());
-                    contextSwitchManager.applyContextSwitch(clock);
-                    readyQueue.addIfArrived(activeProcess, clock.getCurrentTime());
-                    // Remove the shorter activeProcess from queue and make it active
-                    removeProcessFromQueue(readyQueue, shorter);
-                    activeProcess = shorter;
-                    wasPreempted = true;
-                    continue;
-                }
+                executionLog.addRecord(activeProcess.getName(), startTime, clock.getCurrentTime());
+                contextSwitchManager.applyContextSwitch(clock);
                 
-                // Execute one time unit in SJF phase
-                int execTime3 = Math.min(q2, activeProcess.getRemainingTime());
-                activeProcess.setRemainingTime(activeProcess.getRemainingTime() - execTime3);
-                clock.incrementByExecution(execTime3);
-                remainingQuantum -= execTime3;
+                // Add old process back to queue
+                readyQueue.addIfArrived(activeProcess, clock.getCurrentTime());
                 
-                // Add newly arrived processes
-                readyQueue.addArrivedFrom(notArrived, clock.getCurrentTime(), true);
-                
-                if (activeProcess.isFinished()) {
-                    activeProcess.setCompletionTime(clock.getCurrentTime());
-                    activeProcess.setTurnaroundTime(activeProcess.getCompletionTime() - activeProcess.getArrivalTime());
-                    activeProcess.setWaitingTime(activeProcess.getTurnaroundTime() - activeProcess.getBurstTime());
-                    activeProcess.addQuantumToHistory(0);
-                    activeProcess.setQuantum(0);
-                    executionLog.addRecord(activeProcess.getName(), startTime, clock.getCurrentTime());
-                    activeProcess = null;
-                    continue;
-                }
-
-            // If we broke out due to preemption, continue to restart with new activeProcess
-            if (wasPreempted) {
-                continue;
+                // Switch to the shorter process
+                removeProcessFromQueue(readyQueue, shorter);
+                activeProcess = shorter;
+                continue; 
             }
-
-            // If process finished, we already handled it above
-            if (activeProcess == null) {
+            
+            // Execute remaining SJF time
+            int execTime3 = Math.min(remainingQuantum, activeProcess.getRemainingTime());
+            activeProcess.setRemainingTime(activeProcess.getRemainingTime() - execTime3);
+            clock.incrementByExecution(execTime3);
+            remainingQuantum -= execTime3;
+            
+            readyQueue.addArrivedFrom(notArrived, clock.getCurrentTime(), true);
+            
+            if (activeProcess.isFinished()) {
+                finishProcess(activeProcess, startTime);
+                activeProcess = null;
                 continue;
             }
 
             /* ================= QUANTUM FULLY USED ================= */
-            if (!activeProcess.isFinished() && remainingQuantum == 0) {
-                // Process used all quantum but still has work
+            // If we reach here, the process finished its full quantum without preemption
+            if (remainingQuantum == 0) {
                 activeProcess.setQuantum(activeProcess.getQuantum() + 2);
+                activeProcess.addQuantumToHistory(activeProcess.getQuantum());
+                
                 executionLog.addRecord(activeProcess.getName(), startTime, clock.getCurrentTime());
                 contextSwitchManager.applyContextSwitch(clock);
+                
                 readyQueue.addIfArrived(activeProcess, clock.getCurrentTime());
-                activeProcess = null;
+                activeProcess = null; // Forces polling the next process in the next iteration
             }
         }
+        
     }
 
     /* ================= HELPER METHODS ================= */
