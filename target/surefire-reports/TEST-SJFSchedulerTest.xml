@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<testsuite xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="https://maven.apache.org/surefire/maven-surefire-plugin/xsd/surefire-test-report.xsd" name="RoundRobinSchedulerTest" time="0.003" tests="6" errors="0" skipped="0" failures="0">
+<testsuite xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="https://maven.apache.org/surefire/maven-surefire-plugin/xsd/surefire-test-report.xsd" name="SJFSchedulerTest" time="0.02" tests="6" errors="0" skipped="0" failures="6">
   <properties>
     <property name="java.specification.version" value="17"/>
     <property name="sun.cpu.isalist" value="amd64"/>
@@ -58,10 +58,52 @@
     <property name="sun.io.unicode.encoding" value="UnicodeLittle"/>
     <property name="java.class.version" value="61.0"/>
   </properties>
-  <testcase name="testRoundRobinScheduler{RoundRobinTestCase}[1]" classname="RoundRobinSchedulerTest" time="0"/>
-  <testcase name="testRoundRobinScheduler{RoundRobinTestCase}[2]" classname="RoundRobinSchedulerTest" time="0"/>
-  <testcase name="testRoundRobinScheduler{RoundRobinTestCase}[3]" classname="RoundRobinSchedulerTest" time="0"/>
-  <testcase name="testRoundRobinScheduler{RoundRobinTestCase}[4]" classname="RoundRobinSchedulerTest" time="0"/>
-  <testcase name="testRoundRobinScheduler{RoundRobinTestCase}[5]" classname="RoundRobinSchedulerTest" time="0.001"/>
-  <testcase name="testRoundRobinScheduler{RoundRobinTestCase}[6]" classname="RoundRobinSchedulerTest" time="0.001"/>
+  <testcase name="testSJFScheduler{SJFTestCase}[1]" classname="SJFSchedulerTest" time="0.01">
+    <failure message="Execution order mismatch in Test Case 1: Basic mixed arrivals&#10;Expected: [P1, P2, P4, P3, P2, P5, P1]&#10;Actual: [P1, P2, P4, P4, P4, P4, P4] ==&gt; expected: &lt;[P1, P2, P4, P3, P2, P5, P1]&gt; but was: &lt;[P1, P2, P4, P4, P4, P4, P4]&gt;" type="org.opentest4j.AssertionFailedError"><![CDATA[org.opentest4j.AssertionFailedError: 
+Execution order mismatch in Test Case 1: Basic mixed arrivals
+Expected: [P1, P2, P4, P3, P2, P5, P1]
+Actual: [P1, P2, P4, P4, P4, P4, P4] ==> expected: <[P1, P2, P4, P3, P2, P5, P1]> but was: <[P1, P2, P4, P4, P4, P4, P4]>
+	at SJFSchedulerTest.testSJFScheduler(SJFSchedulerTest.java:294)
+]]></failure>
+  </testcase>
+  <testcase name="testSJFScheduler{SJFTestCase}[2]" classname="SJFSchedulerTest" time="0.001">
+    <failure message="Execution order mismatch in Test Case 2: All processes arrive at time 0&#10;Expected: [P5, P2, P4, P1, P3]&#10;Actual: [P5, P5, P5, P5, P5, P5] ==&gt; expected: &lt;[P5, P2, P4, P1, P3]&gt; but was: &lt;[P5, P5, P5, P5, P5, P5]&gt;" type="org.opentest4j.AssertionFailedError"><![CDATA[org.opentest4j.AssertionFailedError: 
+Execution order mismatch in Test Case 2: All processes arrive at time 0
+Expected: [P5, P2, P4, P1, P3]
+Actual: [P5, P5, P5, P5, P5, P5] ==> expected: <[P5, P2, P4, P1, P3]> but was: <[P5, P5, P5, P5, P5, P5]>
+	at SJFSchedulerTest.testSJFScheduler(SJFSchedulerTest.java:294)
+]]></failure>
+  </testcase>
+  <testcase name="testSJFScheduler{SJFTestCase}[3]" classname="SJFSchedulerTest" time="0.001">
+    <failure message="Execution order mismatch in Test Case 3: Varied burst times with starvation risk&#10;Expected: [P1, P2, P3, P5, P4, P1]&#10;Actual: [P1, P1, P2, P2, P2, P2, P2, P2, P2, P2, P2] ==&gt; expected: &lt;[P1, P2, P3, P5, P4, P1]&gt; but was: &lt;[P1, P1, P2, P2, P2, P2, P2, P2, P2, P2, P2]&gt;" type="org.opentest4j.AssertionFailedError"><![CDATA[org.opentest4j.AssertionFailedError: 
+Execution order mismatch in Test Case 3: Varied burst times with starvation risk
+Expected: [P1, P2, P3, P5, P4, P1]
+Actual: [P1, P1, P2, P2, P2, P2, P2, P2, P2, P2, P2] ==> expected: <[P1, P2, P3, P5, P4, P1]> but was: <[P1, P1, P2, P2, P2, P2, P2, P2, P2, P2, P2]>
+	at SJFSchedulerTest.testSJFScheduler(SJFSchedulerTest.java:294)
+]]></failure>
+  </testcase>
+  <testcase name="testSJFScheduler{SJFTestCase}[4]" classname="SJFSchedulerTest" time="0.002">
+    <failure message="Execution order mismatch in Test Case 4: Large bursts with gaps in arrivals&#10;Expected: [P1, P4, P6, P2, P5, P3]&#10;Actual: [P1, P1, P1, P1, P1, P1, P1, P1, P1, P1, P1, P1, P1, P1, P1, P1, P1] ==&gt; expected: &lt;[P1, P4, P6, P2, P5, P3]&gt; but was: &lt;[P1, P1, P1, P1, P1, P1, P1, P1, P1, P1, P1, P1, P1, P1, P1, P1, P1]&gt;" type="org.opentest4j.AssertionFailedError"><![CDATA[org.opentest4j.AssertionFailedError: 
+Execution order mismatch in Test Case 4: Large bursts with gaps in arrivals
+Expected: [P1, P4, P6, P2, P5, P3]
+Actual: [P1, P1, P1, P1, P1, P1, P1, P1, P1, P1, P1, P1, P1, P1, P1, P1, P1] ==> expected: <[P1, P4, P6, P2, P5, P3]> but was: <[P1, P1, P1, P1, P1, P1, P1, P1, P1, P1, P1, P1, P1, P1, P1, P1, P1]>
+	at SJFSchedulerTest.testSJFScheduler(SJFSchedulerTest.java:294)
+]]></failure>
+  </testcase>
+  <testcase name="testSJFScheduler{SJFTestCase}[5]" classname="SJFSchedulerTest" time="0.002">
+    <failure message="Execution order mismatch in Test Case 5: Short bursts with high frequency&#10;Expected: [P1, P4, P2, P5, P3]&#10;Actual: [P1, P1, P1, P1, P1, P1, P1] ==&gt; expected: &lt;[P1, P4, P2, P5, P3]&gt; but was: &lt;[P1, P1, P1, P1, P1, P1, P1]&gt;" type="org.opentest4j.AssertionFailedError"><![CDATA[org.opentest4j.AssertionFailedError: 
+Execution order mismatch in Test Case 5: Short bursts with high frequency
+Expected: [P1, P4, P2, P5, P3]
+Actual: [P1, P1, P1, P1, P1, P1, P1] ==> expected: <[P1, P4, P2, P5, P3]> but was: <[P1, P1, P1, P1, P1, P1, P1]>
+	at SJFSchedulerTest.testSJFScheduler(SJFSchedulerTest.java:294)
+]]></failure>
+  </testcase>
+  <testcase name="testSJFScheduler{SJFTestCase}[6]" classname="SJFSchedulerTest" time="0.001">
+    <failure message="Execution order mismatch in Test Case 6: Mixed scenario - comprehensive test&#10;Expected: [P1, P2, P4, P6, P5, P3, P1]&#10;Actual: [P1, P1, P1, P2, P2, P2, P2, P2, P2, P2, P2, P2, P2, P2, P2] ==&gt; expected: &lt;[P1, P2, P4, P6, P5, P3, P1]&gt; but was: &lt;[P1, P1, P1, P2, P2, P2, P2, P2, P2, P2, P2, P2, P2, P2, P2]&gt;" type="org.opentest4j.AssertionFailedError"><![CDATA[org.opentest4j.AssertionFailedError: 
+Execution order mismatch in Test Case 6: Mixed scenario - comprehensive test
+Expected: [P1, P2, P4, P6, P5, P3, P1]
+Actual: [P1, P1, P1, P2, P2, P2, P2, P2, P2, P2, P2, P2, P2, P2, P2] ==> expected: <[P1, P2, P4, P6, P5, P3, P1]> but was: <[P1, P1, P1, P2, P2, P2, P2, P2, P2, P2, P2, P2, P2, P2, P2]>
+	at SJFSchedulerTest.testSJFScheduler(SJFSchedulerTest.java:294)
+]]></failure>
+  </testcase>
 </testsuite>

@@ -85,6 +85,18 @@ public class ExecutionLog {
         return sb.toString();
     }
 
+    /**
+     * Return the execution sequence as a list of process names in order.
+     * Example: ["P1", "P2", "P1", "P3"]
+     */
+    public synchronized List<String> getExecutionSequence() {
+        List<String> sequence = new ArrayList<>();
+        for (Record r : records) {
+            sequence.add(r.getProcessName());
+        }
+        return sequence;
+    }
+
     /** Clear all records from the log. Useful when running multiple simulations. */
     public synchronized void clear() {
         records.clear();
