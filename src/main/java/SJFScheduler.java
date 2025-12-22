@@ -34,69 +34,89 @@ public class SJFScheduler implements Scheduler {
         int total = processes.size();
         
         Process currentProcess = null;
-        Process previousProcess = null;
+        int currentProcessStartTime = -1;
         
         while (completed < total) {
             int currentTime = clock.getCurrentTime();
             
+            // Add any newly arrived processes to the ready queue
             readyQueue.addArrivedFrom(notYetArrived, currentTime, true);
             
-            List<Process> readyList = readyQueue.asList();
+            // Find process with shortest remaining time
+            Process shortestJob = findShortestJob();
             
-            if (!readyList.isEmpty()) {
-                Process shortestJob = readyList.stream()
-                    .min(Comparator
-                        .comparingInt(Process::getBurstTime)
-                        .thenComparingInt(Process::getArrivalTime)
-                        .thenComparingInt(Process::getPriority))
-                    .orElse(null);
-                
-                List<Process> toReadd = new ArrayList<>();
-                while (!readyQueue.isEmpty()) {
-                    Process p = readyQueue.poll();
-                    if (p != shortestJob) {
-                        toReadd.add(p);
-                    }
-                }
-                for (Process p : toReadd) {
-                    readyQueue.addIfArrived(p, currentTime);
-                }
-                
-                if (shortestJob != null) {
-                    if (previousProcess != null && previousProcess != shortestJob) {
-                        clock.incrementByContextSwitch(contextSwitchTime);
-                        currentTime = clock.getCurrentTime();
-                    }
-                    
-                    int startTime = currentTime;
-                    int executionTime = shortestJob.getRemainingTime();
-                    
-                    clock.incrementByExecution(executionTime);
-                    int endTime = clock.getCurrentTime();
-                    
-                    shortestJob.setRemainingTime(0);
-                    shortestJob.setCompletionTime(endTime);
-                    shortestJob.setTurnaroundTime(endTime - shortestJob.getArrivalTime());
-                    shortestJob.setWaitingTime(shortestJob.getTurnaroundTime() - shortestJob.getBurstTime());
-                    
-                    executionLog.addRecord(shortestJob.getName(), startTime, endTime);
-                    
-                    completed++;
-                    previousProcess = shortestJob;
-                }
-            } else {
-                if (!notYetArrived.isEmpty()) {
-                    int nextArrivalTime = notYetArrived.get(0).getArrivalTime();
-                    if (nextArrivalTime > currentTime) {
-                        clock.advance(nextArrivalTime - currentTime);
-                    } else {
-                        clock.advance(1);
-                    }
-                } else {
-                    break;
+            // Check if we need to preempt the current process
+            if (currentProcess != null && shortestJob != null && shortestJob != currentProcess) {
+                if (shortestJob.getRemainingTime() < currentProcess.getRemainingTime()) {
+                    // Preempt: current process goes back to ready queue
+                    int executionTime = currentTime - currentProcessStartTime;
+                    executionLog.addRecord(currentProcess.getName(), currentProcessStartTime, currentTime);
+                    currentProcess = null;
+                    currentProcessStartTime = -1;
                 }
             }
+            
+            // If no current process, select the shortest job
+            if (currentProcess == null && shortestJob != null) {
+                // Add context switch time if switching from a different process
+                if (!executionLog.getRecords().isEmpty() && currentTime > 0) {
+                    clock.incrementByContextSwitch(contextSwitchTime);
+                    currentTime = clock.getCurrentTime();
+                }
+                
+                currentProcess = shortestJob;
+                currentProcessStartTime = currentTime;
+            }
+            
+            // Execute current process for 1 time unit
+            if (currentProcess != null) {
+                clock.incrementByExecution(1);
+                currentProcess.setRemainingTime(currentProcess.getRemainingTime() - 1);
+                
+                // If process is finished, record it
+                if (currentProcess.isFinished()) {
+                    int endTime = clock.getCurrentTime();
+                    executionLog.addRecord(currentProcess.getName(), currentProcessStartTime, endTime);
+                    
+                    currentProcess.setCompletionTime(endTime);
+                    currentProcess.setTurnaroundTime(endTime - currentProcess.getArrivalTime());
+                    currentProcess.setWaitingTime(currentProcess.getTurnaroundTime() - currentProcess.getBurstTime());
+                    
+                    completed++;
+                    currentProcess = null;
+                    currentProcessStartTime = -1;
+                }
+            } else if (!notYetArrived.isEmpty()) {
+                // No process ready, jump to next arrival time
+                int nextArrivalTime = notYetArrived.get(0).getArrivalTime();
+                if (nextArrivalTime > currentTime) {
+                    clock.advance(nextArrivalTime - currentTime);
+                } else {
+                    clock.advance(1);
+                }
+            } else {
+                break;
+            }
         }
+    }
+    
+    /**
+     * Find the process with the shortest remaining time among ready processes.
+     * Uses arrival time and priority as tiebreakers.
+     */
+    private Process findShortestJob() {
+        List<Process> readyList = readyQueue.asList();
+        if (readyList.isEmpty()) {
+            return null;
+        }
+        
+        return readyList.stream()
+            .filter(p -> !p.isFinished())
+            .min(Comparator
+                .comparingInt(Process::getRemainingTime)
+                .thenComparingInt(Process::getArrivalTime)
+                .thenComparingInt(Process::getPriority))
+            .orElse(null);
     }
     
     @Override
