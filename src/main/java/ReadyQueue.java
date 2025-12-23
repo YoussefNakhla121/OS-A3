@@ -11,7 +11,8 @@ import java.util.Queue;
  * Features:
  * - Internally uses a FIFO queue (LinkedList)
  * - addIfArrived: adds a process only if its arrivalTime <= currentTime
- * - addArrivedFrom: adds all processes from a collection whose arrivalTime <= currentTime
+ * - addArrivedFrom: adds all processes from a collection whose arrivalTime <=
+ * currentTime
  * - poll / peek to obtain the next process
  * - isEmpty and size for checks
  *
@@ -36,7 +37,8 @@ public class ReadyQueue {
      * @throws IllegalArgumentException if p is null
      */
     public synchronized boolean addIfArrived(Process p, int currentTime) {
-        if (p == null) throw new IllegalArgumentException("Process cannot be null");
+        if (p == null)
+            throw new IllegalArgumentException("Process cannot be null");
         if (p.getArrivalTime() <= currentTime) {
             queue.add(p);
             return true;
@@ -56,17 +58,20 @@ public class ReadyQueue {
      * @param processes   Collection of candidate processes (may be modified
      *                    when {@code removeAdded} is true)
      * @param currentTime Current simulation time
-     * @param removeAdded Whether to remove added processes from the input collection
+     * @param removeAdded Whether to remove added processes from the input
+     *                    collection
      * @return the number of processes added to the ready queue
      * @throws IllegalArgumentException if processes is null
      */
     public synchronized int addArrivedFrom(Collection<Process> processes, int currentTime, boolean removeAdded) {
-        if (processes == null) throw new IllegalArgumentException("processes cannot be null");
+        if (processes == null)
+            throw new IllegalArgumentException("processes cannot be null");
         int added = 0;
         Iterator<Process> it = processes.iterator();
         while (it.hasNext()) {
             Process p = it.next();
-            if (p == null) continue;
+            if (p == null)
+                continue;
             if (p.getArrivalTime() <= currentTime) {
                 queue.add(p);
                 added++;
@@ -79,14 +84,15 @@ public class ReadyQueue {
     }
 
     /**
-     * Finds and removes the process that arrived earliest. 
-     * If multiple processes arrived at the same time, it picks the one 
+     * Finds and removes the process that arrived earliest.
+     * If multiple processes arrived at the same time, it picks the one
      * with the highest priority (lowest priority value).
      *
      * @return The selected Process, or null if the queue is empty.
      */
     public synchronized Process pollEarliestArrivalHighestPriority() {
-        if (queue.isEmpty()) return null;
+        if (queue.isEmpty())
+            return null;
 
         Process bestMatch = null;
 
@@ -100,7 +106,7 @@ public class ReadyQueue {
             // Rule 1: Check Arrival Time (Earliest wins)
             if (p.getArrivalTime() < bestMatch.getArrivalTime()) {
                 bestMatch = p;
-            } 
+            }
             // Rule 2: If Arrival Times are equal, check Priority (Lower value wins)
             else if (p.getArrivalTime() == bestMatch.getArrivalTime()) {
                 if (p.getPriority() < bestMatch.getPriority()) {
@@ -113,7 +119,48 @@ public class ReadyQueue {
         if (bestMatch != null) {
             queue.remove(bestMatch);
         }
-        
+
+        return bestMatch;
+    }
+
+    /**
+     * Finds and removes the process with the highest priority (lowest priority
+     * value).
+     * If multiple processes have the same priority, it selects the one
+     * that arrived earliest.
+     *
+     * @return The selected Process, or null if the queue is empty.
+     */
+    public synchronized Process pollHighestPriorityEarliestArrival() {
+        if (queue.isEmpty())
+            return null;
+
+        Process bestMatch = null;
+
+        // Iterate through the current queue to find the best candidate
+        for (Process p : queue) {
+            if (bestMatch == null) {
+                bestMatch = p;
+                continue;
+            }
+
+            // Rule 1: Check Priority (Lower value wins)
+            if (p.getPriority() < bestMatch.getPriority()) {
+                bestMatch = p;
+            }
+            // Rule 2: If priorities are equal, check Arrival Time (Earliest wins)
+            else if (p.getPriority() == bestMatch.getPriority()) {
+                if (p.getArrivalTime() < bestMatch.getArrivalTime()) {
+                    bestMatch = p;
+                }
+            }
+        }
+
+        // Remove the found process from the internal queue and return it
+        if (bestMatch != null) {
+            queue.remove(bestMatch);
+        }
+
         return bestMatch;
     }
 
@@ -145,14 +192,12 @@ public class ReadyQueue {
         return queue.size();
     }
 
-    /**
-     * Remove all processes from the ready queue.
-     */
+
     public synchronized void clear() {
         queue.clear();
     }
 
     public List<Process> asList() {
-    return new ArrayList<>(queue);
-}
+        return new ArrayList<>(queue);
+    }
 }

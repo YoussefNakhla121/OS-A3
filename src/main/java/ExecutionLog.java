@@ -54,11 +54,7 @@ public class ExecutionLog {
         return Collections.unmodifiableList(new ArrayList<>(records));
     }
 
-    /**
-     * Print the execution order in sequence to standard output. Each line
-     * contains the process name and its start/end times in chronological order
-     * (the order records were added).
-     */
+
     public synchronized void printExecutionOrder() {
         if (records.isEmpty()) {
             System.out.println("(no execution records)");
@@ -69,10 +65,7 @@ public class ExecutionLog {
         }
     }
 
-    /**
-     * Return a compact textual representation of the execution sequence.
-     * Example: "P1[0-3] -> P2[3-5] -> P1[5-8]"
-     */
+
     public synchronized String getExecutionSequenceString() {
         if (records.isEmpty()) return "";
         StringBuilder sb = new StringBuilder();

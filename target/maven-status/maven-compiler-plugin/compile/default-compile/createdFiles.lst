@@ -6,6 +6,7 @@ Process.class
 SimulationClock.class
 ProcessInput.class
 ReadyQueue.class
+PriorityScheduler.class
 ExecutionLog.class
 ContextSwitchManager.class
 RoundRobinScheduler.class

@@ -100,10 +100,7 @@ public class SJFScheduler implements Scheduler {
         }
     }
     
-    /**
-     * Find the process with the shortest remaining time among ready processes.
-     * Uses arrival time and priority as tiebreakers.
-     */
+
     private Process findShortestJob() {
         List<Process> readyList = readyQueue.asList();
         if (readyList.isEmpty()) {

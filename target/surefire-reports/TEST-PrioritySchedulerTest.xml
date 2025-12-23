@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<testsuite xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="https://maven.apache.org/surefire/maven-surefire-plugin/xsd/surefire-test-report.xsd" name="RoundRobinSchedulerTest" time="0.009" tests="6" errors="0" skipped="0" failures="0">
+<testsuite xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="https://maven.apache.org/surefire/maven-surefire-plugin/xsd/surefire-test-report.xsd" name="PrioritySchedulerTest" time="0.015" tests="6" errors="0" skipped="0" failures="4">
   <properties>
     <property name="java.specification.version" value="17"/>
     <property name="sun.cpu.isalist" value="amd64"/>
@@ -58,10 +58,26 @@
     <property name="sun.io.unicode.encoding" value="UnicodeLittle"/>
     <property name="java.class.version" value="61.0"/>
   </properties>
-  <testcase name="testRoundRobinScheduler{RoundRobinTestCase}[1]" classname="RoundRobinSchedulerTest" time="0"/>
-  <testcase name="testRoundRobinScheduler{RoundRobinTestCase}[2]" classname="RoundRobinSchedulerTest" time="0.001"/>
-  <testcase name="testRoundRobinScheduler{RoundRobinTestCase}[3]" classname="RoundRobinSchedulerTest" time="0.001"/>
-  <testcase name="testRoundRobinScheduler{RoundRobinTestCase}[4]" classname="RoundRobinSchedulerTest" time="0.001"/>
-  <testcase name="testRoundRobinScheduler{RoundRobinTestCase}[5]" classname="RoundRobinSchedulerTest" time="0.001"/>
-  <testcase name="testRoundRobinScheduler{RoundRobinTestCase}[6]" classname="RoundRobinSchedulerTest" time="0.001"/>
+  <testcase name="testPriorityScheduler{PriorityTestCase}[1]" classname="PrioritySchedulerTest" time="0.002"/>
+  <testcase name="testPriorityScheduler{PriorityTestCase}[2]" classname="PrioritySchedulerTest" time="0.009">
+    <failure message="Execution order mismatch in Test Case 2: All processes arrive at time 0 ==&gt; expected: &lt;[P2, P3, P1, P3, P1, P3, P4, P5]&gt; but was: &lt;[P2, P3, P1, P4, P5, P3]&gt;" type="org.opentest4j.AssertionFailedError"><![CDATA[org.opentest4j.AssertionFailedError: Execution order mismatch in Test Case 2: All processes arrive at time 0 ==> expected: <[P2, P3, P1, P3, P1, P3, P4, P5]> but was: <[P2, P3, P1, P4, P5, P3]>
+	at PrioritySchedulerTest.testPriorityScheduler(PrioritySchedulerTest.java:201)
+]]></failure>
+  </testcase>
+  <testcase name="testPriorityScheduler{PriorityTestCase}[3]" classname="PrioritySchedulerTest" time="0"/>
+  <testcase name="testPriorityScheduler{PriorityTestCase}[4]" classname="PrioritySchedulerTest" time="0">
+    <failure message="Execution order mismatch in Test Case 4: Large bursts with gaps in arrivals ==&gt; expected: &lt;[P1, P3, P1, P2, P3, P4, P5, P6]&gt; but was: &lt;[P1, P3, P1, P3, P2, P3, P4, P5, P6]&gt;" type="org.opentest4j.AssertionFailedError"><![CDATA[org.opentest4j.AssertionFailedError: Execution order mismatch in Test Case 4: Large bursts with gaps in arrivals ==> expected: <[P1, P3, P1, P2, P3, P4, P5, P6]> but was: <[P1, P3, P1, P3, P2, P3, P4, P5, P6]>
+	at PrioritySchedulerTest.testPriorityScheduler(PrioritySchedulerTest.java:201)
+]]></failure>
+  </testcase>
+  <testcase name="testPriorityScheduler{PriorityTestCase}[5]" classname="PrioritySchedulerTest" time="0.001">
+    <failure message="Waiting time mismatch for P1 ==&gt; expected: &lt;7&gt; but was: &lt;8&gt;" type="org.opentest4j.AssertionFailedError"><![CDATA[org.opentest4j.AssertionFailedError: Waiting time mismatch for P1 ==> expected: <7> but was: <8>
+	at PrioritySchedulerTest.testPriorityScheduler(PrioritySchedulerTest.java:213)
+]]></failure>
+  </testcase>
+  <testcase name="testPriorityScheduler{PriorityTestCase}[6]" classname="PrioritySchedulerTest" time="0.001">
+    <failure message="Waiting time mismatch for P1 ==&gt; expected: &lt;16&gt; but was: &lt;14&gt;" type="org.opentest4j.AssertionFailedError"><![CDATA[org.opentest4j.AssertionFailedError: Waiting time mismatch for P1 ==> expected: <16> but was: <14>
+	at PrioritySchedulerTest.testPriorityScheduler(PrioritySchedulerTest.java:213)
+]]></failure>
+  </testcase>
 </testsuite>

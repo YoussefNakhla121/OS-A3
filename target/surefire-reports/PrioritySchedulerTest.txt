@@ -1,0 +1,20 @@
+-------------------------------------------------------------------------------
+Test set: PrioritySchedulerTest
+-------------------------------------------------------------------------------
+Tests run: 6, Failures: 4, Errors: 0, Skipped: 0, Time elapsed: 0.015 s <<< FAILURE! - in PrioritySchedulerTest
+testPriorityScheduler{PriorityTestCase}[2]  Time elapsed: 0.009 s  <<< FAILURE!
+org.opentest4j.AssertionFailedError: Execution order mismatch in Test Case 2: All processes arrive at time 0 ==> expected: <[P2, P3, P1, P3, P1, P3, P4, P5]> but was: <[P2, P3, P1, P4, P5, P3]>
+	at PrioritySchedulerTest.testPriorityScheduler(PrioritySchedulerTest.java:201)
+
+testPriorityScheduler{PriorityTestCase}[4]  Time elapsed: 0 s  <<< FAILURE!
+org.opentest4j.AssertionFailedError: Execution order mismatch in Test Case 4: Large bursts with gaps in arrivals ==> expected: <[P1, P3, P1, P2, P3, P4, P5, P6]> but was: <[P1, P3, P1, P3, P2, P3, P4, P5, P6]>
+	at PrioritySchedulerTest.testPriorityScheduler(PrioritySchedulerTest.java:201)
+
+testPriorityScheduler{PriorityTestCase}[5]  Time elapsed: 0.001 s  <<< FAILURE!
+org.opentest4j.AssertionFailedError: Waiting time mismatch for P1 ==> expected: <7> but was: <8>
+	at PrioritySchedulerTest.testPriorityScheduler(PrioritySchedulerTest.java:213)
+
+testPriorityScheduler{PriorityTestCase}[6]  Time elapsed: 0.001 s  <<< FAILURE!
+org.opentest4j.AssertionFailedError: Waiting time mismatch for P1 ==> expected: <16> but was: <14>
+	at PrioritySchedulerTest.testPriorityScheduler(PrioritySchedulerTest.java:213)
+
