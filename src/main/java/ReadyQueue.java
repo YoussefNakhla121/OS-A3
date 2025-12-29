@@ -152,6 +152,9 @@ public class ReadyQueue {
             else if (p.getPriority() == bestMatch.getPriority()) {
                 if (p.getArrivalTime() < bestMatch.getArrivalTime()) {
                     bestMatch = p;
+                } else if (p.getArrivalTime() == bestMatch.getArrivalTime()
+                        && p.getName().compareTo(bestMatch.getName()) < 0) {
+                    bestMatch = p;
                 }
             }
         }
@@ -161,6 +164,30 @@ public class ReadyQueue {
             queue.remove(bestMatch);
         }
 
+        return bestMatch;
+    }
+
+    // Peek version: returns highest-priority earliest-arrival without removing
+    public synchronized Process peekHighestPriorityEarliestArrival() {
+        if (queue.isEmpty())
+            return null;
+
+        Process bestMatch = null;
+        for (Process p : queue) {
+            if (bestMatch == null) {
+                bestMatch = p;
+                continue;
+            }
+
+            if (p.getPriority() < bestMatch.getPriority()
+                    || (p.getPriority() == bestMatch.getPriority()
+                            && p.getArrivalTime() < bestMatch.getArrivalTime())
+                    || (p.getPriority() == bestMatch.getPriority()
+                            && p.getArrivalTime() == bestMatch.getArrivalTime()
+                            && p.getName().compareTo(bestMatch.getName()) < 0)) {
+                bestMatch = p;
+            }
+        }
         return bestMatch;
     }
 
@@ -192,7 +219,9 @@ public class ReadyQueue {
         return queue.size();
     }
 
-
+    /**
+     * Remove all processes from the ready queue.
+     */
     public synchronized void clear() {
         queue.clear();
     }
