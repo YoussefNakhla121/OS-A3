@@ -26,95 +26,99 @@ public class PriorityScheduler implements Scheduler {
         List<Process> notArrived = new ArrayList<>(processes);
         Process activeProcess = null;
 
+        boolean activeProcessExecuted = false;
+
         // Initialize lastTime for aging
         for (Process p : processes)
             p.setLastTime(p.getArrivalTime());
 
         while (!readyQueue.isEmpty() || !notArrived.isEmpty() || activeProcess != null) {
 
-            int currentTime = clock.getCurrentTime();
+            // 1️⃣ Add arrived processes
+            readyQueue.addArrivedFrom(notArrived, clock.getCurrentTime(), true);
 
-            // 1️⃣ Add newly arrived processes
-            readyQueue.addArrivedFrom(notArrived, currentTime, true);
-
-            // 3️⃣ Pick CPU if idle
-            if (activeProcess == null) {
-                activeProcess = readyQueue.pollHighestPriorityEarliestArrival();
-                if (activeProcess != null)
-                    activeProcess.setLastTime(clock.getCurrentTime());
-            }
+            // 2️⃣ Apply aging
             applyAging(readyQueue);
 
-            // 2️⃣ Apply aging immediately after arrival
-            if (!readyQueue.isEmpty()) {
-                Process candidate1 = readyQueue.pollHighestPriorityEarliestArrival();
-                if (candidate1.getPriority() < activeProcess.getPriority()
-                        || (candidate1.getPriority() == activeProcess.getPriority()
-                                && candidate1.getArrivalTime() < activeProcess.getArrivalTime())) {
-                    executionLog.addRecord(activeProcess.getName(), activeProcess.getStartTime(),
+            boolean decisionStable = false;
+
+            // 3️⃣ Selection + comparison loop
+            while (!decisionStable) {
+
+                Process bestCandidate = readyQueue.peekHighestPriorityEarliestArrival();
+
+                if (bestCandidate == null) {
+                    decisionStable = true;
+                    break;
+                }
+
+                if (activeProcess == null) {
+                    activeProcess = readyQueue.pollHighestPriorityEarliestArrival();
+                    activeProcessExecuted = false; // ❗ has not run yet
+                    decisionStable = true;
+                    break;
+                }
+
+                boolean shouldPreempt = bestCandidate.getPriority() < activeProcess.getPriority()
+                        || (bestCandidate.getPriority() == activeProcess.getPriority()
+                                && bestCandidate.getArrivalTime() < activeProcess.getArrivalTime())
+                        || (bestCandidate.getPriority() == activeProcess.getPriority()
+                                && bestCandidate.getArrivalTime() == activeProcess.getArrivalTime()
+                                && bestCandidate.getName().compareTo(activeProcess.getName()) < 0);
+
+                if (shouldPreempt) {
+
+                    bestCandidate = readyQueue.pollHighestPriorityEarliestArrival();
+                    // Log execution slice (only meaningful if it ran)
+                    executionLog.addRecord(
+                            activeProcess.getName(),
+                            activeProcess.getStartTime(),
                             clock.getCurrentTime());
-                    contextSwitchManager.applyContextSwitch(clock);
-                    readyQueue.addIfArrived(activeProcess, clock.getCurrentTime());
-                    activeProcess = candidate1;
-                } else {
-                    readyQueue.addIfArrived(candidate1, clock.getCurrentTime());
-                }
-            }
-
-            // 4️⃣ Preemption loop: continuously check for better candidates
-            activeProcess.setStartTime(clock.getCurrentTime());
-            if (activeProcess != null) {
-                while (true) {
-                    Process candidate = readyQueue.pollHighestPriorityEarliestArrival();
-                    if (candidate == null)
-                        break;
-
-                    boolean shouldPreempt = candidate.getPriority() < activeProcess.getPriority()
-                            || (candidate.getPriority() == activeProcess.getPriority()
-                                    && candidate.getArrivalTime() < activeProcess.getArrivalTime());
-
-                    if (shouldPreempt) {
-                        // Log current slice
-                        executionLog.addRecord(activeProcess.getName(), activeProcess.getStartTime(),
-                                clock.getCurrentTime());
-
-                        // Put active process back to ready queue
-                        readyQueue.addIfArrived(activeProcess, clock.getCurrentTime());
+                    if (activeProcessExecuted) {
+                        // ✅ Update lastTime ONLY if it actually ran
                         activeProcess.setLastTime(clock.getCurrentTime());
-
-                        // Context switch
-                        contextSwitchManager.applyContextSwitch(clock);
-
-                        // Apply aging after context switch
-                        applyAging(readyQueue);
-
-                        // Activate the new highest priority process
-                        activeProcess = candidate;
-                        activeProcess.setLastTime(clock.getCurrentTime());
-                    } else {
-                        // Candidate not better, put it back and exit loop
-                        readyQueue.addIfArrived(candidate, clock.getCurrentTime());
-                        break;
                     }
+
+                    readyQueue.addIfArrived(activeProcess, clock.getCurrentTime());
+                    contextSwitchManager.applyContextSwitch(clock);
+
+                    readyQueue.addArrivedFrom(notArrived, clock.getCurrentTime(), true);
+                    applyAging(readyQueue);
+
+                    // Switch active process
+                    activeProcess = bestCandidate;
+                    activeProcessExecuted = false; // ❗ new process hasn’t run yet
+
+                } else {
+                    decisionStable = true;
                 }
             }
-
-            int startTime = clock.getCurrentTime();
 
             // 5️⃣ Execute 1 time unit
             if (activeProcess != null) {
+                activeProcess.setStartTime(clock.getCurrentTime());
                 activeProcess.setRemainingTime(activeProcess.getRemainingTime() - 1);
                 clock.incrementByExecution(1);
+
+                activeProcessExecuted = true; // ✅ it actually ran
             }
 
-            // 6️⃣ Add newly arrived during this tick
             readyQueue.addArrivedFrom(notArrived, clock.getCurrentTime(), true);
-
-            // 7️⃣ Finish process if done
+            applyAging(readyQueue);
+            // 7️⃣ Finish process
             if (activeProcess != null && activeProcess.isFinished()) {
-                finishProcess(activeProcess, startTime);
+                finishProcess(activeProcess, activeProcess.getStartTime());
+                Process nextCandidate = readyQueue.pollHighestPriorityEarliestArrival();
+                if (nextCandidate != null) {
+                    activeProcess = nextCandidate;
+                    activeProcessExecuted = false;
+
+                } else {
+                    activeProcess = null;
+                    activeProcessExecuted = false;
+                }
+
                 contextSwitchManager.applyContextSwitch(clock);
-                activeProcess = null;
             }
         }
     }
